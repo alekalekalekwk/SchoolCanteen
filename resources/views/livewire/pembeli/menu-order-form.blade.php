@@ -18,18 +18,24 @@
     @enderror
 
     <form wire:submit="placeOrder">
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Jam Pengambilan</label>
-            <select wire:model="pickup_time" class="border rounded px-3 py-2 w-full md:w-1/3">
-                <option value="">-- Pilih Jam --</option>
-                @foreach ($timeSlots as $value => $label)
-                    <option value="{{ $value }}">{{ $label }}</option>
-                @endforeach
-            </select>
-            @error('pickup_time')
-                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-            @enderror
-        </div>
+        @if (empty($timeSlots))
+            <div class="mb-6 p-4 bg-yellow-100 text-yellow-800 rounded font-semibold">
+                Kantin sudah tutup untuk hari ini.
+            </div>
+        @else
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Jam Pengambilan</label>
+                <select wire:model="pickup_time" class="border rounded px-3 py-2 w-full md:w-1/3">
+                    <option value="">-- Pilih Jam --</option>
+                    @foreach ($timeSlots as $value => $label)
+                        <option value="{{ $value }}">{{ $label }}</option>
+                    @endforeach
+                </select>
+                @error('pickup_time')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+        @endif
 
         <div class="space-y-4 mb-6">
             @foreach ($booth->menuItems as $item)
@@ -51,8 +57,10 @@
             @endforeach
         </div>
 
-        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-            Pesan Sekarang
-        </button>
+        @if (!empty($timeSlots))
+            <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                Pesan Sekarang
+            </button>
+        @endif
     </form>
 </div>

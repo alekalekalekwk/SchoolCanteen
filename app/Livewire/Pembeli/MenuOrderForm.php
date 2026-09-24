@@ -28,11 +28,17 @@ class MenuOrderForm extends Component
 
     public function getTimeSlotsProperty()
     {
-        return [
+        $slots = [
             '09:40:00' => '09:40 - 10:00',
             '10:10:00' => '10:10 - 10:30',
-            '11:20:00' => '11.20 - 13.00',
+            '11:20:00' => '11:20 - 13:00',
         ];
+
+        $currentTime = \Carbon\Carbon::now()->format('H:i:s');
+
+        return array_filter($slots, function ($key) use ($currentTime) {
+            return $key > $currentTime;
+        }, ARRAY_FILTER_USE_KEY);
     }
 
     public function placeOrder()
@@ -42,6 +48,11 @@ class MenuOrderForm extends Component
             'quantities' => 'required|array',
             'quantities.*' => 'integer|min:0',
         ]);
+
+        if ($this->pickup_time <= \Carbon\Carbon::now()->format('H:i:s')) {
+            $this->addError('pickup_time', 'Jam yang dipilih sudah lewat, silakan pilih ulang.');
+            return;
+        }
 
         // Filter items with qty > 0
         $orderedItems = array_filter($this->quantities, fn($qty) => $qty > 0);

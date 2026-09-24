@@ -7,6 +7,7 @@ use App\Livewire\Penjual\IncomingOrders;
 use App\Livewire\Penjual\StockManager;
 use App\Livewire\Pembeli\BoothList;
 use App\Livewire\Pembeli\MenuOrderForm;
+use App\Livewire\Pembeli\OrderHistory;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -20,6 +21,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:pembeli'])->group(function () {
     Route::get('/dashboard', BoothList::class)->name('dashboard');
     Route::get('/booth/{booth}', MenuOrderForm::class)->name('booth.show');
+    Route::get('/pesanan-saya', OrderHistory::class)->name('orders.history');
 });
 
 Route::middleware(['auth', 'role:penjual'])->group(function () {
