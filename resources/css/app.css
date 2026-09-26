@@ -1,3 +1,22 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+    /* Colors */
+    --color-brand-blue: #3C8DB3;
+    --color-brand-orange: #F4782A;
+    --color-brand-cream: #FBF3E4;
+    
+    /* Fonts */
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+}
+
+/* Base Utility Classes */
+@layer base {
+    body {
+        @apply font-body text-[#000000] bg-white;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-heading;
+    }
+}

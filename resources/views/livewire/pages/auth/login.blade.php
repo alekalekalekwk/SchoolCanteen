@@ -9,70 +9,49 @@ new #[Layout('layouts.guest')] class extends Component
 {
     public LoginForm $form;
 
-    /**
-     * Handle an incoming authentication request.
-     */
     public function login(): void
     {
         $this->validate();
-
         $this->form->authenticate();
-
         Session::regenerate();
-
         $user = \Illuminate\Support\Facades\Auth::user();
         $redirectTo = match ($user->role) {
             'penjual' => route('penjual.orders', absolute: false),
             'admin'   => route('admin.dashboard', absolute: false),
             default   => route('dashboard', absolute: false),
         };
-
         $this->redirect($redirectTo, navigate: true);
     }
 }; ?>
+<div class="relative min-h-screen flex items-center justify-center font-['Space_Grotesk']" style="background-image: url('{{ asset('images/wikrama.jpeg') }}'); background-size: cover; background-position: center;">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="relative w-full max-w-md p-12 bg-[#F4782A] rounded-[20px] border-[3px] border-black">
+        <h2 class="text-4xl font-bold text-white mb-4">Masuk ke Kantin Kita</h2>
+        <p class="text-xl font-bold text-white mb-8">Gunakan akun yang sudah dibuatkan admin</p>
 
-<div>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+        <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form wire:submit="login">
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="form.email" id="email" class="block mt-1 w-full" type="email" name="email" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
-        </div>
+        <form wire:submit="login" class="space-y-6">
+            <!-- Email -->
+            <div>
+                <label for="email" class="block text-2xl font-bold text-white mb-2">Email</label>
+                <input wire:model="form.email" id="email" type="email" required autocomplete="username"
+                       class="w-full h-12 px-4 bg-white rounded-[10px] border-2 border-black text-xl text-black/60"
+                       placeholder="nama@kantin.com" />
+                <x-input-error :messages="$errors->get('form.email')" class="mt-2 text-white" />
+            </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <!-- Password -->
+            <div>
+                <label for="password" class="block text-2xl font-bold text-white mb-2">Password</label>
+                <input wire:model="form.password" id="password" type="password" required autocomplete="current-password"
+                       class="w-full h-12 px-4 bg-white rounded-[10px] border-2 border-black text-xl text-black/60"
+                       placeholder="********" />
+                <x-input-error :messages="$errors->get('form.password')" class="mt-2 text-white" />
+            </div>
 
-            <x-text-input wire:model="form.password" id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('form.password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember" class="inline-flex items-center">
-                <input wire:model="form.remember" id="remember" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}" wire:navigate>
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
+            <!-- Submit button -->
+            <button type="submit" class="w-full h-16 mt-6 bg-[#3C8DB3] rounded-2xl flex items-center justify-center text-3xl font-bold text-white">Masuk</button>
+        </form>
+    </div>
 </div>

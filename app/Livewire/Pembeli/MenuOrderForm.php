@@ -18,6 +18,18 @@ class MenuOrderForm extends Component
     public $pickup_time = '';
     public array $quantities = [];
 
+    public function getTotalPriceProperty()
+    {
+        $total = 0;
+        foreach ($this->quantities as $id => $qty) {
+            if ($qty > 0) {
+                $item = $this->booth->menuItems->find($id);
+                if ($item) $total += ($item->price * $qty);
+            }
+        }
+        return $total;
+    }
+
     public function mount(Booth $booth)
     {
         $this->booth = $booth->load('menuItems');

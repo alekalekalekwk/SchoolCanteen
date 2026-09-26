@@ -58,21 +58,28 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach($items as $item)
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                @if($item->photo)
-                                    <img src="{{ asset('storage/'.$item->photo) }}" alt="{{ $item->name }}" class="w-12 h-12 object-cover rounded">
-                                @else
-                                    <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-gray-400 text-xs">
-                                        No img
-                                    </div>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                {{ $item->booth->name }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                {{ $item->name }}
-                            </td>
+                             <td class="px-6 py-4 whitespace-nowrap">
+                                 @if($item->photo)
+                                     <img src="{{ Storage::url($item->photo) }}" alt="{{ $item->name }}" class="w-12 h-12 object-cover rounded flex-shrink-0">
+                                 @else
+                                     <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-gray-400 text-xs">
+                                         📷
+                                     </div>
+                                 @endif
+                             </td>
+                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                 {{ $item->booth->name }}
+                             </td>
+                             <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                 {{ $item->name }}
+                                 <div class="text-xs mt-1">
+                                     @if($item->photo)
+                                         <a href="#" wire:click.prevent="$set('editingItem', {{ $item->id }})" class="underline text-orange-600">Ubah foto</a>
+                                     @else
+                                         <a href="#" wire:click.prevent="$set('editingItem', {{ $item->id }})" class="underline text-red-600">+ Tambah foto</a>
+                                     @endif
+                                 </div>
+                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                                 Rp {{ number_format($item->price, 0, ',', '.') }}
                             </td>
@@ -88,6 +95,18 @@
                                 </button>
                             </td>
                         </tr>
+                        @if($editingItem === $item->id)
+                            <tr>
+                                <td colspan="6" class="px-6 py-4 bg-gray-50 border-t border-gray-100">
+                                    <div class="flex items-center gap-4">
+                                        <input type="file" wire:model="newPhotos.{{ $item->id }}" accept="image/*" class="text-sm">
+                                        <button wire:click="replacePhoto({{ $item->id }})" class="px-3 py-1 bg-indigo-600 text-white text-xs rounded hover:bg-indigo-700">Simpan Foto</button>
+                                        <button wire:click="$set('editingItem', null)" class="px-3 py-1 bg-gray-300 text-gray-800 text-xs rounded hover:bg-gray-400">Batal</button>
+                                    </div>
+                                    @error("newPhotos.{$item->id}") <span class="text-red-600 text-xs mt-1 block">{{ $message }}</span> @enderror
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                 </tbody>
             </table>
