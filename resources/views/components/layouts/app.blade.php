@@ -21,7 +21,7 @@
                         $navs = match($role) {
                             'pembeli' => [['route' => 'dashboard', 'label' => 'Booth'], ['route' => 'orders.history', 'label' => 'Pesanan Saya']],
                             'penjual' => [['route' => 'penjual.orders', 'label' => 'Order Masuk'], ['route' => 'penjual.stock', 'label' => 'Kelola Stok']],
-                            'admin'   => [['route' => 'admin.dashboard', 'label' => 'Laporan'], ['route' => 'admin.booths', 'label' => 'Kelola Booth'], ['route' => 'admin.users', 'label' => 'Kelola Siswa']],
+                            'admin'   => [['route' => 'admin.dashboard', 'label' => 'Laporan'], ['route' => 'admin.booths', 'label' => 'Kelola Booth'], ['route' => 'admin.users', 'label' => 'Kelola Siswa'], ['route' => 'admin.schedules', 'label' => 'Jadwal Ambil']],
                             default => [],
                         };
                     @endphp

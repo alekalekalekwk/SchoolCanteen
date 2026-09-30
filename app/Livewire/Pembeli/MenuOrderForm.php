@@ -5,6 +5,8 @@ namespace App\Livewire\Pembeli;
 use App\Models\Booth;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\TimeSlot;
+use App\Models\ScheduleSetting;
 use App\Models\MenuItem;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
@@ -40,19 +42,23 @@ class MenuOrderForm extends Component
 
     public function getTimeSlotsProperty()
     {
-        $slots = [
-            '09:40:00' => '09:40 - 10:00',
-            '10:10:00' => '10:10 - 10:30',
-            '11:20:00' => '11:20 - 13:00',
-            '13:30:00' => '13:00 - 14.00',
-        ];
+        $isOverride = ScheduleSetting::value('override_active') ?? false;
+        $type = $isOverride ? 'override' : (\Carbon\Carbon::now()->isMonday() ? 'senin' : 'reguler');
+
+        $slots = TimeSlot::where('type', $type)
+            ->orderBy('sort_order')
+            ->orderBy('start_time')
+            ->get();
 
         $currentTime = \Carbon\Carbon::now()->format('H:i:s');
 
-        return array_filter($slots, function ($key) use ($currentTime) {
-            return $key > $currentTime;
-        }, ARRAY_FILTER_USE_KEY);
-    }
+        $result = [];
+        foreach ($slots as $slot) {
+            if ($slot->start_time > $currentTime) {
+                $result[$slot->start_time] = $slot->label;
+            }
+        }
+        return $result;    }
 
     public function placeOrder()
     {
