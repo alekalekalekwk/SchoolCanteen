@@ -5,18 +5,21 @@
     --color-brand-blue: #3C8DB3;
     --color-brand-orange: #F4782A;
     --color-brand-cream: #FBF3E4;
-    
-    /* Fonts */
+
+    /* Fonts – font-sans overrides Tailwind default so IBM Plex Sans is the body/data font */
+    --font-sans: 'IBM Plex Sans', sans-serif;
     --font-heading: 'Space Grotesk', sans-serif;
-    --font-body: 'IBM Plex Sans', sans-serif;
 }
 
-/* Base Utility Classes */
 @layer base {
     body {
-        @apply font-body text-[#000000] bg-white;
+        @apply font-sans text-black bg-white;
     }
     h1, h2, h3, h4, h5, h6 {
         @apply font-heading;
+    }
+    /* Tabular figures for all numeric data */
+    .tabular {
+        font-variant-numeric: tabular-nums;
     }
 }

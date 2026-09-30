@@ -10,6 +10,8 @@ use Livewire\Attributes\Layout;
 #[Layout('components.layouts.app')]
 class OrderHistory extends Component
 {
+    public $tab = 'diproses';
+
     public function render()
     {
         $orders = Order::where('buyer_id', Auth::id())
