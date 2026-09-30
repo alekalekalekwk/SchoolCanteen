@@ -5,6 +5,7 @@
     --color-brand-blue: #3C8DB3;
     --color-brand-orange: #F4782A;
     --color-brand-cream: #FBF3E4;
+    --color-brand-sage: #8B9B6E;
 
     /* Fonts – font-sans overrides Tailwind default so IBM Plex Sans is the body/data font */
     --font-sans: 'IBM Plex Sans', sans-serif;

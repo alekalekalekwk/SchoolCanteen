@@ -8,10 +8,13 @@
         </div>
 
         {{-- Header orange card: booth name & description --}}
-        <x-card variant="orange" class="mb-8">
+        <x-card variant="orange" class="mb-6">
             <h2 class="text-3xl md:text-4xl font-bold font-heading text-white mb-2">{{ $booth->name }}</h2>
             <p class="text-lg md:text-xl text-white/85">{{ $booth->description }}</p>
         </x-card>
+
+        {{-- Accent divider line (sage) --}}
+        <div class="border-b border-brand-sage/25 mb-8"></div>
 
         @if (session()->has('success'))
             <div class="mb-6 p-4 bg-[#E3EFE7] text-[#3B7A57] rounded-xl font-medium">
@@ -35,6 +38,13 @@
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
                 {{-- Menu items --}}
                 <div class="lg:col-span-3 space-y-4">
+                    <div class="flex items-center gap-2 pb-2 border-b border-brand-sage/20">
+                        <svg class="w-5 h-5 text-brand-sage" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+                        </svg>
+                        <span class="font-heading font-bold text-base text-gray-800">Daftar Menu</span>
+                    </div>
+
                     @foreach ($booth->menuItems as $item)
                         <x-card class="flex items-center gap-4 py-4">
                             {{-- thumbnail --}}

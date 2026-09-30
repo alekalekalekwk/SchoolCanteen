@@ -14,6 +14,6 @@ $sizeClasses = match($size) {
 };
 @endphp
 
-<span {{ $attributes->merge(['class' => "inline-flex items-center font-medium rounded-full tabular {$variantClasses} {$sizeClasses}"]) }}>
+<span {{ $attributes->merge(['class' => "inline-flex items-center font-medium rounded-full tabular-nums {$variantClasses} {$sizeClasses}"]) }}>
     {{ $slot }}
 </span>

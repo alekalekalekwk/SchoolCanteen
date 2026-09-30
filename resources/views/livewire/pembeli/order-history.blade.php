@@ -4,7 +4,7 @@
         <h1 class="text-2xl font-bold font-heading text-black">Riwayat &amp; Pesanan Anda</h1>
         <div class="bg-[#F4782A] text-white px-4 py-2 rounded-xl font-heading shadow-sm">
             <span class="block text-xs uppercase tracking-wider text-white/80">Skor Kredit</span>
-            <span class="text-2xl font-bold tabular">{{ $this->creditScore }}</span>
+            <span class="text-2xl font-bold tabular-nums">{{ $this->creditScore }}</span>
         </div>
     </div>
 
@@ -46,11 +46,11 @@
                     <div class="flex-1">
                         <div class="flex items-baseline gap-2 mb-1">
                             <h3 class="font-heading text-lg text-black font-bold">{{ $order->booth->name }}</h3>
-                            <span class="text-sm text-gray-500 tabular">#{{ $order->id }}</span>
+                            <span class="text-sm text-gray-500 tabular-nums">#{{ $order->id }}</span>
                         </div>
                         <p class="text-sm text-gray-700">
                             <span class="font-medium">Jam Ambil:</span>
-                            <span class="text-black font-bold tabular">{{ $order->pickup_time }}</span>
+                            <span class="text-black font-bold tabular-nums">{{ $order->pickup_time }}</span>
                         </p>
                         <p class="text-sm text-gray-600 mt-1">
                             @foreach($order->orderItems as $itm)

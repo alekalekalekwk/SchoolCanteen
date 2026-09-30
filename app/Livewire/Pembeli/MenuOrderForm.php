@@ -44,6 +44,7 @@ class MenuOrderForm extends Component
             '09:40:00' => '09:40 - 10:00',
             '10:10:00' => '10:10 - 10:30',
             '11:20:00' => '11:20 - 13:00',
+            '13:30:00' => '13:00 - 14.00',
         ];
 
         $currentTime = \Carbon\Carbon::now()->format('H:i:s');
